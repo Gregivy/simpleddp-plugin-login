@@ -5,9 +5,9 @@ export const simpleDDPLogin = {
     this._loggedIn = false;
 
     // login method
-    this.login = (obj) => {
+    this.login = (obj, atStart = false) => {
       return new Promise((resolve, reject) => {
-        this.call('login',[obj]).then((m) => {
+        this.call('login',[obj],atStart).then((m) => {
           if (m && m.id) {
             this.userId = m.id;
             this.token = m.token;
@@ -46,16 +46,17 @@ export const simpleDDPLogin = {
     this.logoutWhenDisconnectedEvent = this.on('disconnected',(m)=>{
       if (this.userId) {
         this.ddpConnection.emit('loginSessionLost',this.userId);
+        this.ddpConnection.pauseQueue();
+        this.login({resume:this.token},true).then(()=>{
+          this.ddpConnection.continueQueue();
+        }).catch((m)=>{
+          this.ddpConnection.continueQueue();
+          this.ddpConnection.emit('loginResumeFailed',m);
+        });
       }
       //this.userId = undefined;
 			this._loggedIn = false;
 		});
 
-    // try to resume when connection was lost and established again
-    this.resumeEvent = this.on('connected',(m)=>{
-			if (this.token && !this._loggedIn) {
-        this.login({resume:this.token});
-      }
-		});
   }
 }

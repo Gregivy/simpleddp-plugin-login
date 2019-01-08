@@ -99,4 +99,8 @@ server.on('loginSessionLost',(id=>{
 server.on('loginResume',(m)=>{
   console.log('User resumed (logged in by token)', m);
 });
+
+server.on('loginResumeFailed',(m)=>{
+  console.log('Failed to resume authorization with token after reconnection ', m);
+});
 ```

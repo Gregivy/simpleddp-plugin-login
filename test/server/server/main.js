@@ -15,3 +15,11 @@ Meteor.methods({
     return {id:this.userId};
   }
 });
+
+Meteor.publish('testsub', function() {
+  if (this.userId) {
+    return Meteor.users.find({});
+  } else {
+    return [];
+  }
+});

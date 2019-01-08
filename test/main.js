@@ -1,6 +1,6 @@
 const assert = require('chai').assert;
 
-const simpleDDP = require('simpleddp').default;
+const simpleDDP = require('simpleddp');
 const simpleDDPLogin = require('../lib/main.js').simpleDDPLogin;
 const ws = require("ws");
 
@@ -39,10 +39,9 @@ describe('simpleDDP Login', function(){
 
       server.connect().then(function(){
         server.login({password:"admin",user:{username:"admin"}}).then(function(m) {
-          if (m.type == "password") {
-            token = m.token;
-            done();
-          }
+          assert.equal(m.type,'password');
+          token = m.token;
+          done();
         });
       });
 
@@ -51,7 +50,8 @@ describe('simpleDDP Login', function(){
     it('should recieve authorized method answer', function (done) {
 
       server.call("test").then(function(m) {
-        if (m.id == server.userId) done();
+        assert.equal(m.id,server.userId);
+        done();
       });
 
     });
@@ -61,7 +61,8 @@ describe('simpleDDP Login', function(){
       server.disconnect().then(function(){
         server.connect().then(function(){
           server.call("test").then(function(m) {
-            if (m.id == server.userId) done();
+            assert.equal(m.id,server.userId);
+            done();
           });
         });
       });
@@ -118,6 +119,78 @@ describe('simpleDDP Login', function(){
     it('resumeCounter should be equal to 1', function () {
 
       assert.equal(resumeCounter,1);
+
+    });
+
+  });
+
+  describe('subscription auth', function (){
+
+    it('should succefully resubscribe after auth', function (done) {
+
+      server.connect().then(function(){
+        const sub = server.sub('testsub');
+        server.login({password:"admin",user:{username:"admin"}}).then(function(m) {
+          sub.ready().then(function() {
+            assert.equal(server.collection('users').fetch().length, 1);
+            server.disconnect().then(function() {
+              server.connect().then(function(){
+                //sub.ready().then(function(){
+                setTimeout(function(){
+                  assert.equal(server.collection('users').fetch().length, 1);
+                  done();
+                },200);
+
+                //});
+              });
+            });
+          });
+        });
+      });
+
+    });
+
+    it('should loose sub data', function (done) {
+
+      server.connect().then(function(){
+        const sub = server.sub('testsub');
+        server.login({password:"admin",user:{username:"admin"}}).then(function(m) {
+          sub.ready().then(function() {
+            assert.equal(server.collection('users').fetch().length, 1);
+            server.logout().then(function() {
+              sub.ready().then(function() {
+                assert.equal(server.collection('users').fetch().length, 0);
+                done();
+              });
+            });
+          });
+        });
+      });
+
+    });
+
+  });
+
+  describe('methods call order', function (){
+
+    it('should call login method on reconnect before anything else', function (done) {
+
+      server.connect().then(function(){
+        server.login({password:"admin",user:{username:"admin"}}).then(function(m) {
+          server.call("test").then(function(m) {
+            assert.equal(m.id,server.userId);
+            server.disconnect().then(function(){
+              server.call("test").then(function(m) {
+                assert.equal(m.id,server.userId);
+                done();
+              }).catch(function(e){
+                console.log(e);
+              });
+              server.connect();
+            });
+          });
+        });
+      });
 
     });
 
