@@ -17,7 +17,7 @@ Use it to authenticate with any **Meteor.Accounts** login provider (also custom)
 Extends `simpleDDP` instance.
 
 ```javascript
-const simpleDDP = require("simpleddp").default;
+const simpleDDP = require("simpleddp");
 const simpleDDPLogin = require("simpleddp-plugin-login").simpleDDPLogin;
 
 let opts = {
@@ -28,8 +28,10 @@ let opts = {
 const server = new simpleDDP(opts,[simpleDDPLogin]);
 ```
 
-Adds events (`login`, `logout`, `loginResume`, `loginSessionLost`), methods (`login`, `logout`) and `userId` property which is `undefined` when user is not logged in or
-is equal to *user.\_id* when user is logged in. Plugin automatically resumes authentication if connection with server was lost and then restored back.
+Adds events (`login`, `logout`, `loginResume`, `loginSessionLost`, `loginResumeFailed`),methods (`login`, `logout`) and `userId` property
+which is `undefined` when user is not logged in or is equal to *user.\_id* when user is logged in.
+Also `token` property when user is logged in.
+Plugin automatically resumes authentication if connection with server was lost and then restored back.
 
 ### simpleDDP.login(auth)
 
