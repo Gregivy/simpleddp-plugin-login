@@ -42,7 +42,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
-    "simpleddp": "^1.2.1",
+    "simpleddp": "^1.2.3",
     "ws": "^6.1.0"
   }
 }

@@ -8,6 +8,7 @@ const opts = {
     endpoint: "ws://localhost:3000/websocket",
     SocketConstructor: ws,
     reconnectInterval: 5000,
+    autoReconnect: true
     //autoConnect: false
 };
 
