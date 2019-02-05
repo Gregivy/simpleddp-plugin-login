@@ -10,7 +10,7 @@ Use it to authenticate with any **Meteor.Accounts** login provider (also custom)
 
 ## Install
 
-`npm install simpleddp-plugin-login --save`
+`npm install simpleddp-plugin-login@2 --save`
 
 ## Usage
 
