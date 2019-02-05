@@ -7,7 +7,7 @@ export const simpleDDPLogin = {
     // login method
     this.login = (obj, atStart = false) => {
       return new Promise((resolve, reject) => {
-        this.call('login',[obj],atStart).then((m) => {
+        this.apply('login',[obj],atStart).then((m) => {
           if (m && m.id) {
             this.userId = m.id;
             this.token = m.token;
@@ -29,7 +29,7 @@ export const simpleDDPLogin = {
     this.logout = () => {
       return new Promise((resolve, reject) => {
         if (this._loggedIn) {
-          this.call('logout').then((m) => {
+          this.apply('logout').then((m) => {
             this.userId = undefined;
             this.token = undefined;
             this._loggedIn = false;
