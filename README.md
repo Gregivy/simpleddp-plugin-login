@@ -25,7 +25,7 @@ Extends `simpleDDP` instance.
 const simpleDDP = require("simpleddp");
 const simpleDDPLogin = require("simpleddp-plugin-login").simpleDDPLogin;
 
-let opts = {
+const opts = {
     endpoint: "ws://someserver.com/websocket",
     SocketConstructor: WebSocket,
     reconnectInterval: 5000
@@ -51,12 +51,12 @@ A *Promise* which resolves to the object with userId of the logged in user when 
 ```javascript
 server.userId; // undefined, we are not logged in
 
-let password = "somepassword";
-let username = "admin";
-let email = "admin@admin";
+const password = "somepassword";
+const username = "admin";
+const email = "admin@admin";
 
 // you must pass password and at least one of username or email
-let userAuth = await server.login({
+const userAuth = await server.login({
   password,
   user: {
       username,
@@ -91,23 +91,13 @@ await server.logout();
 ### Events Example
 
 ```javascript
-server.on('login',(m)=>{
-  console.log('User logged in as', m);
-});
+server.on('login', user => console.log('User logged in as', user));
 
-server.on('logout',()=>{
-  console.log('User logged out');
-});
+server.on('logout', () => console.log('User logged out'));
 
-server.on('loginSessionLost',(id=>{
-  console.log(`User {id} lost connection to server, will auto resume by default with token`);
-});
+server.on('loginSessionLost', id => console.log(`User ${id} lost connection to server, will auto resume by default with token`))
 
-server.on('loginResume',(m)=>{
-  console.log('User resumed (logged in by token)', m);
-});
+server.on('loginResume', user => console.log('User resumed (logged in by token)', user));
 
-server.on('loginResumeFailed',(m)=>{
-  console.log('Failed to resume authorization with token after reconnection ', m);
-});
+server.on('loginResumeFailed', user => console.log('Failed to resume authorization with token after reconnection ', user));
 ```
