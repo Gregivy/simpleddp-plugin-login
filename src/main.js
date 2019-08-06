@@ -57,7 +57,7 @@ export const simpleDDPLogin = {
 			this._loggedIn = false;
 		});
 
-    this.clientReadyEvent = this.on('clientReady', function () {
+    this.clientReadyEvent = this.on('clientReady', () => {
       if (this.userId) {
         this.ddpConnection.continueQueue();
       }

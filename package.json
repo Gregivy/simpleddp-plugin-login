@@ -1,6 +1,6 @@
 {
   "name": "simpleddp-plugin-login",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "This is a plugin for simpleDDP js library. Use it to authenticate with any Meteor.Accounts login provider.",
   "keywords": [
     "ddp",
@@ -21,7 +21,7 @@
   "scripts": {
     "install-meteor": "curl https://install.meteor.com/ | sh",
     "test": "npm run build && node test_script.js",
-    "build": "babel src --out-dir lib",
+    "build": "rm -rf lib && babel src --out-dir lib --no-comments",
     "prepublish": "npm run build"
   },
   "repository": {
