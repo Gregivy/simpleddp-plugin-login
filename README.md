@@ -8,9 +8,9 @@
 This is plugin for [simpleDDP](https://github.com/gregivy/simpleddp) js library.
 Use it to authenticate with any **Meteor.Accounts** login provider (also custom).
 
-## Version 3.0.0
+## Version 4.0.0
 
-Plugin is for `simpleDDP` >= 2.0.0.
+Plugin is for `simpleDDP` >= 2.2.4
 For previous versions [see](https://github.com/Gregivy/simpleddp-plugin-login/tree/master).
 
 ## Install

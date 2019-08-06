@@ -48,15 +48,20 @@ export const simpleDDPLogin = {
         this.ddpConnection.emit('loginSessionLost',this.userId);
         this.ddpConnection.pauseQueue();
         this.login({resume:this.token},true).then(()=>{
-          this.ddpConnection.continueQueue();
+
         }).catch((m)=>{
-          this.ddpConnection.continueQueue();
           this.ddpConnection.emit('loginResumeFailed',m);
         });
       }
       //this.userId = undefined;
 			this._loggedIn = false;
 		});
+
+    this.clientReadyEvent = this.on('clientReady', function () {
+      if (this.userId) {
+        this.ddpConnection.continueQueue();
+      }
+    });
 
   }
 }
