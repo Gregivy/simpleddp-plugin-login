@@ -47,11 +47,6 @@ export const simpleDDPLogin = {
       if (this.userId) {
         this.ddpConnection.emit('loginSessionLost',this.userId);
         this.ddpConnection.pauseQueue();
-        this.login({resume:this.token},true).then(()=>{
-
-        }).catch((m)=>{
-          this.ddpConnection.emit('loginResumeFailed',m);
-        });
       }
       //this.userId = undefined;
 			this._loggedIn = false;
@@ -59,6 +54,9 @@ export const simpleDDPLogin = {
 
     this.clientReadyEvent = this.on('clientReady', () => {
       if (this.userId) {
+        this.login({resume:this.token},true).catch((m)=>{
+          this.ddpConnection.emit('loginResumeFailed',m);
+        });
         this.ddpConnection.continueQueue();
       }
     });

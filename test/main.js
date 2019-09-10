@@ -8,7 +8,8 @@ const opts = {
     endpoint: "ws://localhost:3000/websocket",
     SocketConstructor: ws,
     reconnectInterval: 5000,
-    autoReconnect: true
+    autoReconnect: true,
+    maxTimeout: 1000
     //autoConnect: false
 };
 
@@ -58,14 +59,13 @@ describe('simpleDDP Login', function(){
     });
 
     it('should re-login after disconnect', function (done) {
-
       server.disconnect().then(function(){
         server.connect().then(function(){
           server.call("test").then(function(m) {
             assert.equal(m.id,server.userId);
             done();
-          });
-        });
+          }).catch(e=>console.log(e));
+        }).catch(e=>console.log(e));
       });
 
     });
@@ -189,6 +189,29 @@ describe('simpleDDP Login', function(){
               });
               server.connect();
             });
+          });
+        });
+      });
+
+    });
+
+  });
+
+  describe('maxTimeout behaviour', function (){
+
+    it('should call login method on reconnect before anything else', function (done) {
+
+      server.connect().then(function(){
+
+        server.on('loginResumeFailed', function () {
+          done(new Error());
+        });
+
+        server.login({password:"admin",user:{username:"admin"}}).then(function(m) {
+          server.disconnect().then(function () {
+            setTimeout(function() {
+              done();
+            },1500);
           });
         });
       });

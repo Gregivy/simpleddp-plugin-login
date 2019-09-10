@@ -1,6 +1,6 @@
 {
   "name": "simpleddp-plugin-login",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "This is a plugin for simpleDDP js library. Use it to authenticate with any Meteor.Accounts login provider.",
   "keywords": [
     "ddp",
@@ -42,7 +42,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
-    "simpleddp": "^2.0.0",
+    "simpleddp": "^2.2.4",
     "ws": "^6.1.0"
   }
 }
