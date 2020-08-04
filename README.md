@@ -74,6 +74,28 @@ server.userId; // now equals to 'd6PqCAKk2QZeqZHWy'
 server.token; // now equals to 'N50Gmknk__geP63YD9pHKdl07b8XXxNGpB_cz5Lte4d'
 ```
 
+#### Example for session tokens
+
+```javascript
+server.userId; // undefined, we are not logged in
+
+let resumeToken = 'N50Gmknk__geP63YD9pHKdl07b8XXxNGpB_cz5Lte4d'
+
+// you must pass password and at least one of username or email
+let userAuth = await server.login({
+  resume: 'N50Gmknk__geP63YD9pHKdl07b8XXxNGpB_cz5Lte4d'
+});
+
+// userAuth will be something like this
+// { id: 'd6PqCAKk2QZeqZHWy',
+//   token: 'N50Gmknk__geP63YD9pHKdl07b8XXxNGpB_cz5Lte4d',
+//   tokenExpires: { '$date': 1548525528846 },
+//   type: 'resume' }
+
+server.userId; // now equals to 'd6PqCAKk2QZeqZHWy'
+server.token; // now equals to 'N50Gmknk__geP63YD9pHKdl07b8XXxNGpB_cz5Lte4d'
+```
+
 ### simpleDDP.logout()
 
 Call this method to logout.
