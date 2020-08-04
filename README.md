@@ -81,7 +81,6 @@ server.userId; // undefined, we are not logged in
 
 let resumeToken = 'N50Gmknk__geP63YD9pHKdl07b8XXxNGpB_cz5Lte4d'
 
-// you must pass password and at least one of username or email
 let userAuth = await server.login({
   resume: 'N50Gmknk__geP63YD9pHKdl07b8XXxNGpB_cz5Lte4d'
 });
