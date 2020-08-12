@@ -82,7 +82,7 @@ server.userId; // undefined, we are not logged in
 let resumeToken = 'N50Gmknk__geP63YD9pHKdl07b8XXxNGpB_cz5Lte4d'
 
 let userAuth = await server.login({
-  resume: 'N50Gmknk__geP63YD9pHKdl07b8XXxNGpB_cz5Lte4d'
+  resume: resumeToken,
 });
 
 // userAuth will be something like this
